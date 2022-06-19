@@ -1,6 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
-# v1.0.1
+# v1.1.0
+- **support** Add support for more Node versions
 # v1.0.0
 ## Features
 - **routes** Added API routes
