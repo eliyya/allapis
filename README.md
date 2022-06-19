@@ -5,8 +5,6 @@ In case you want to simplify the apis and create instances
 -   Simple
 -   Light
 
-> **Note:** requires *ES Modules, Node `^18` or Node `^17.5.0` and the flag `--experimental-fetch` or Node `^16.15.0` whit the same flag
-
 ## Example
 ```js
 // Import the Api
@@ -21,3 +19,13 @@ console.log(ditto)
 
 const cheri = await api.berry['1'].get()
 console.log(cheri)
+```
+
+## Requeriments
+You need to have Node `^18`
+
+Or have Node `^17.5` and run your program with the `--experimental-fetch` flag
+
+Or have Node `^16.15` and run your program with the `--experimental-fetch` flag
+
+Or if you use another version of Node you should install **node fetch** with `npm i node-fetch`
