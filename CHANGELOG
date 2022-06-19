@@ -1,0 +1,11 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+# v1.0.0
+## Features
+- **routes** Added API routes
+- **get:** Added the `get()` method
+- **post:** Added the `post()` method
+- **patch:** Added the `patch()` method
+- **put:** Added the `put()` method
+- **delete:** Added the `delete()` method
+- **types:** Added the `.d.ts` file

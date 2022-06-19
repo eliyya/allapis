@@ -1,0 +1,28 @@
+{
+    "name": "allapis",
+    "version": "1.0.0",
+    "description": "In case you want to simplify the apis and create instances",
+    "type": "module",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eliyya/any-api.git"
+    },
+    "keywords": [
+        "api",
+        "allapi",
+        "allapis",
+        "any-api",
+        "anyapis",
+        "anyapi",
+        "any-apis",
+        "fetch",
+        "node"
+    ],
+    "author": "eliyya",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/eliyya/any-api/issues"
+    },
+    "homepage": "https://github.com/eliyya/any-api#readme"
+}
