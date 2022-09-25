@@ -1,4 +1,4 @@
-# any-api
+# allapis
 
 In case you want to simplify the apis and create instances
 
@@ -10,9 +10,6 @@ In case you want to simplify the apis and create instances
 
 ```js
 // Import the Api
-import Api from 'allapis'
-
-// Create Api object
 const pokeApi = Api('https://pokeapi.co/api/v2/') // eg. pokeapi
 
 // Its ready to use
@@ -28,15 +25,16 @@ console.log(cheri)
 const discordApi = Api({
     url: 'https://discord.com/api/v10',
     headers: {
-        Authorization: `Bot ${proces.env.DISCORD_TOKEN}`
+        Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+        'Content-Type': 'application/json'
     }
 })
-const channel = discordApi.channels['674261868562689674']
+const channel = discordApi.channels['885674115615301643']
 
 // use url query like a string
-const messages1 = channel.messages.get('limit=20').then(r => r.json())
+const messages1 = await channel.messages.get('limit=20').then(r => r.json())
 // or like a object
-const messages2 = channel.messages
+const messages2 = await channel.messages
     .get({
         query: {
             limit: 50,
@@ -48,7 +46,7 @@ const messages2 = channel.messages
 // use post, delete, put, patch methods too
 channel.messages
     .post({
-        body: json.stringify({
+        body: JSON.stringify({
             content: 'hello!!'
         })
     })

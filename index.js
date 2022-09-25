@@ -41,10 +41,11 @@ function proccesQuery(query = '') {
 //
 /**
  * process a fetch options
- * @param {FetchOptions} options
+ * @param {(FetchOptions | string)} options
  * @returns {[RequestInit, string]}
  */
 function processOptions(options) {
+    if (typeof options === 'string') return [{}, proccesQuery(options.query)]
     let q = ''
     if ('query' in options) q = proccesQuery(options.query)
     delete options.query
@@ -82,15 +83,15 @@ function createProxy(options) {
             async delete(foptions = {}) {
                 const [r, q] = processOptions(foptions)
                 return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'DELETE' }))
-            },
+            }
         },
         {
             get: (obj, prop) =>
                 obj[prop] ??
                 createProxy({
                     ...options,
-                    url: `${options.url}/${prop}`,
-                }),
+                    url: `${options.url}/${prop}`
+                })
         }
     )
 }

@@ -6,7 +6,7 @@
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/eliyya/any-api.git"
+        "url": "git+https://github.com/eliyya/allapis.git"
     },
     "keywords": [
         "api",
@@ -22,9 +22,9 @@
     "author": "eliyya",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/eliyya/any-api/issues"
+        "url": "https://github.com/eliyya/allapis/issues"
     },
-    "homepage": "https://github.com/eliyya/any-api#readme",
+    "homepage": "https://github.com/eliyya/allapis#readme",
     "dependencies": {
         "just-extend": "6.1.1"
     }
