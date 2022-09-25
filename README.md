@@ -10,6 +10,9 @@ In case you want to simplify the apis and create instances
 
 ```js
 // Import the Api
+import Api from 'allapis'
+
+// Create Api object
 const pokeApi = Api('https://pokeapi.co/api/v2/') // eg. pokeapi
 
 // Its ready to use
