@@ -1,10 +1,18 @@
-export function Api(options: string | RequestInit): API
+export function Api(options: string | FetchInit): API
+
+interface fetchOptions extends RequestInit {
+    query?: string | object
+}
+
+interface FetchInit extends RequestInit {
+    url: string
+}
 
 interface API {
-    get(getOptions: { query: string | object; headers: object }): object,
-    post(postOptions: { query: string | object; headers: object; body: string | object }): object,
-    patch(patchOptions: { query: string | object; headers: object; body: string | object }): object,
-    put(putOptions: { query: string | object; headers: object; body: string | object }): object,
-    delete(deleteOptions: { query: string | object; headers: object; body: string | object }): object,
+    get(getOptions: fetchOptions): Promise<Response>
+    post(postOptions: fetchOptions): Promise<Response>
+    patch(patchOptions: fetchOptions): Promise<Response>
+    put(putOptions: fetchOptions): Promise<Response>
+    delete(deleteOptions: fetchOptions): Promise<Response>
     [key: string]: API
 }

@@ -1,4 +1,6 @@
-let fetch = global.fetch
+import merge from 'just-extend'
+
+let fetch = globalThis.fetch
 try {
     if (!fetch) {
         fetch = (await import('node-fetch')).default
@@ -11,18 +13,47 @@ try {
     throw error
 }
 
+/**
+ * process a query option
+ * @param {string | Object} query
+ * @returns {string}
+ */
 function proccesQuery(query = '') {
-    if (query && typeof query === 'object')
-        return `?${new URLSearchParams(query)}`
-    if (query && typeof query === 'string' && !query.startsWith('?'))
-        return `?${query}`
-    if (query && typeof query === 'string') return query
+    if (!query) return ''
+    if (typeof query === 'object') return `?${new URLSearchParams(query)}`
+    if (typeof query === 'string' && !query.startsWith('?')) return `?${query}`
+    if (typeof query === 'string') return query
     return ''
 }
 
 /**
+ * @typedef FetchOptions
+ * @property {(string | Object)} [query] - a url query
+ * @type {RequestInit}
+ */
+
+/**
+ * @typedef FetchInit
+ * @property {string} url - a url
+ * @type {RequestInit}
+ */
+
+//
+/**
+ * process a fetch options
+ * @param {FetchOptions} options
+ * @returns {[RequestInit, string]}
+ */
+function processOptions(options) {
+    let q = ''
+    if ('query' in options) q = proccesQuery(options.query)
+    delete options.query
+    return [options, q]
+}
+
+/**
  * Create new Api
- * @param {string | RequestInit} options
+ * @param {(FetchInit | string)} options
  */
 export function Api(options) {
     if (typeof options === 'string') options = { url: options }
@@ -32,158 +63,36 @@ export function Api(options) {
 function createProxy(options) {
     return new Proxy(
         {
-            /**
-             * Apply a GET to this route
-             * @param {{query?:string;headers?:object}} getOptions
-             * @returns {Psomise<any>}
-             */
-            async get({ query = '', headers = {} } = {}) {
-                const res = await fetch(
-                    `${options.url}${proccesQuery(query)}`,
-                    {
-                        ...options,
-                        method: 'GET',
-                        headers: { ...options.headers, ...headers }
-                    }
-                )
-                if (res.ok) return res.json()
-                else Promise.reject(new Error(res.statusText))
+            async get(foptions = {}) {
+                const [r, q] = processOptions(foptions)
+                return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'GET' }))
             },
-
-            /**
-             * Apply a POST to this route
-             * @param {{query?:string;headers?:object;body?:string|object}} getOptions
-             * @returns {Psomise<any>}
-             */
-            async post({ query = '', headers = {}, body = '' } = {}) {
-                const res = await fetch(
-                    `${options.url}${proccesQuery(query)}`,
-                    {
-                        ...options,
-                        headers: { ...options.headers, ...headers },
-                        method: 'POST',
-                        body:
-                            typeof body !== 'string'
-                                ? JSON.stringify(body)
-                                : body
-                    }
-                )
-                if (res.ok) return res.json()
-                else
-                    Promise.reject(
-                        new Error(`Error ${res.status}: ${res.statusText}`)
-                    )
+            async post(foptions = {}) {
+                const [r, q] = processOptions(foptions)
+                return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'POST' }))
             },
-
-            /**
-             * Apply a PATCH to this route
-             * @param {{query?:string;headers?:object;body?:string|object}} getOptions
-             * @returns {Psomise<any>}
-             */
-            async patch({ query = '', headers = {}, body = '' } = {}) {
-                const res = await fetch(
-                    `${options.url}${proccesQuery(query)}`,
-                    {
-                        ...options,
-                        headers: { ...options.headers, ...headers },
-                        method: 'PATCH',
-                        body:
-                            typeof body !== 'string'
-                                ? JSON.stringify(body)
-                                : body
-                    }
-                )
-                if (res.ok) return res.json()
-                else
-                    Promise.reject(
-                        new Error(`Error ${res.status}: ${res.statusText}`)
-                    )
+            async patch(foptions = {}) {
+                const [r, q] = processOptions(foptions)
+                return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'PATCH' }))
             },
-
-            /**
-             * Apply a PUT to this route
-             * @param {{query?:string;headers?:object;body?:string|object}} getOptions
-             * @returns {Psomise<any>}
-             */
-            async put({ query = '', headers = {}, body = '' } = {}) {
-                const res = await fetch(
-                    `${options.url}${proccesQuery(query)}`,
-                    {
-                        ...options,
-                        headers: { ...options.headers, ...headers },
-                        method: 'PUT',
-                        body:
-                            typeof body !== 'string'
-                                ? JSON.stringify(body)
-                                : body
-                    }
-                )
-                if (res.ok) return res.json()
-                else
-                    Promise.reject(
-                        new Error(`Error ${res.status}: ${res.statusText}`)
-                    )
+            async put(foptions = {}) {
+                const [r, q] = processOptions(foptions)
+                return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'PUT' }))
             },
-
-            /**
-             * Apply a DELETE to this route
-             * @param {{query?:string;headers?:object;body?:string|object}} getOptions
-             * @returns {Psomise<any>}
-             */
-            async delete({ query = '', headers = {}, body = '' } = {}) {
-                const res = await fetch(
-                    `${options.url}${proccesQuery(query)}`,
-                    {
-                        ...options,
-                        headers: { ...options.headers, ...headers },
-                        method: 'DELETE',
-                        body:
-                            typeof body !== 'string'
-                                ? JSON.stringify(body)
-                                : body
-                    }
-                )
-                if (res.ok) return res.json()
-                else
-                    Promise.reject(
-                        new Error(`Error ${res.status}: ${res.statusText}`)
-                    )
-            }
+            async delete(foptions = {}) {
+                const [r, q] = processOptions(foptions)
+                return fetch(`${options.url}${q}`, merge(true, {}, options, r, { method: 'DELETE' }))
+            },
         },
         {
-            get: (obj, prop) => {
-                if (!['get', 'post', 'patch', 'put', 'delete'].includes(prop))
-                    return createProxy({
-                        ...options,
-                        url: `${options.url}/${prop}`
-                    })
-                else return obj[prop]
-            }
+            get: (obj, prop) =>
+                obj[prop] ??
+                createProxy({
+                    ...options,
+                    url: `${options.url}/${prop}`,
+                }),
         }
     )
 }
-
-/**
- * Create a new WebSocket connection to the Revolt Api
- * @param {string} token - Bot Token
- * @returns {WebSocket} - the WebSocket connection ready to use
- */
-// export function WebSocketConnection(token) {
-//     try {
-//         const ws = new WebSocket("wss://ws.revolt.chat?format=json")
-//         ws.on("open", () => {
-//             setInterval(() => ws.ping(), 15_000)
-//             ws.send(
-//                 JSON.stringify({
-//                     type: "Authenticate",
-//                     token: token,
-//                 })
-//             )
-//         })
-//         return ws
-//     } catch (error) {
-//         throw error
-//     }
-// }
 
 export default Api
