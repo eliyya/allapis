@@ -2,22 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+# v1.2.2
+
+## Breaking changues
+
+- **Api** If you use a RequestInit, now is the second parameter
+
+## Fix
+
+- **url** Fix a problem with the last `/` in the init url
+- **types** Request types are correct now
+
 # v1.2.0
 
--   **simplify** simplifies the use making it more faithful to the fetch
+- **simplify** simplifies the use making it more faithful to the fetch
 
 # v1.1.0
 
--   **support** Add support for more Node versions
+- **support** Add support for more Node versions
 
 # v1.0.0
 
 ## Features
 
--   **routes** Added API routes
--   **get:** Added the `get()` method
--   **post:** Added the `post()` method
--   **patch:** Added the `patch()` method
--   **put:** Added the `put()` method
--   **delete:** Added the `delete()` method
--   **types:** Added the `.d.ts` file
+- **routes** Added API routes
+- **get:** Added the `get()` method
+- **post:** Added the `post()` method
+- **patch:** Added the `patch()` method
+- **put:** Added the `put()` method
+- **delete:** Added the `delete()` method
+- **types:** Added the `.d.ts` file

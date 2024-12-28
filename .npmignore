@@ -1,2 +1,7 @@
-test.js
+
 node_modules
+src
+test
+.prettierrc
+CHANGELOG.md
+tsconfig*

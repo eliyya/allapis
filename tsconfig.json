@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ES2024",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "declaration": true, // Genera archivos .d.ts
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "outDir": "./lib", // Compila a la carpeta lib
+        "lib": ["ES2020", "DOM"] // Bibliotecas necesarias
+    },
+    "include": ["src"], // Solo compilar los archivos de la carpeta src
+    "exclude": ["test"] // Excluir la carpeta test de este archivo de configuración
+}
